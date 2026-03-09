@@ -1,0 +1,2 @@
+# OpenGL_Z-fighting
+openGL源代码，可以在本地看一下对数深度缓冲与常规的ZTest的对比，可以看到log确实减少了许多Z-fighting
