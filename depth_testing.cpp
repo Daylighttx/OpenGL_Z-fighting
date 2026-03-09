@@ -290,10 +290,10 @@ int main()
 			currentShader->use();
 			
 			// 计算对数深度系数
-			// Fcoef = 2.0 / log2(farPlane + 1.0)
-			float Fcoef = 2.0f / log2(farPlane + 1.0f);
+			// Fcoef = 1.0 / log2(farPlane + 1.0)
+			// 使得 depth = log2(z + 1) * Fcoef 直接映射到 [0, 1]
+			float Fcoef = 1.0f / log2(farPlane + 1.0f);
 			currentShader->setFloat("Fcoef", Fcoef);
-			currentShader->setFloat("Fcoef_half", Fcoef * 0.5f);
 		}
 		else {
 			// 传统深度模式
@@ -366,8 +366,8 @@ int main()
 			float depthBufferNormal = (ndcZ + 1.0f) * 0.5f;  // OpenGL 默认 [-1,1] -> [0,1]
 			
 			// 对数深度值
-			float Fcoef = 2.0f / log2(farPlane + 1.0f);
-			float depthBufferLog = log2(viewZ + 1.0f) * Fcoef * 0.5f;
+			// depth = log2(z + 1) / log2(far + 1)
+			float depthBufferLog = log2(viewZ + 1.0f) / log2(farPlane + 1.0f);
 			
 			std::cout << "----------------------------------------" << std::endl;
 			std::cout << "相机位置: (" << cameraPos.x << ", " << cameraPos.y << ", " << cameraPos.z << ")" << std::endl;
